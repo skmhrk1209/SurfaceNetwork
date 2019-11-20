@@ -1,0 +1,20 @@
+#version 120
+
+const int size = 1024;
+const int skip = 8;
+const int num = size / skip;
+const float coefficient = 20.0;
+uniform vec2 vertices[size];
+
+void main() {
+
+    float alpha = 0.0;
+
+    for (int i = 0; i < size; i += skip) {
+        alpha += 1 / distance(vertices[i], gl_FragCoord.xy);
+    }
+
+    alpha *= coefficient / num;
+
+    gl_FragColor = vec4(gl_Color.rgb, alpha);
+}
